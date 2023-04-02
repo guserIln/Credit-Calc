@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Кредитный калькулятор";
+
+     List<SelectListItem> listItems= new List<SelectListItem>();
+   listItems.Add(new SelectListItem
+        {
+          Text = "День",
+          Value = "Day"
+        });
+   listItems.Add(new SelectListItem
+        {
+            Text = "Месяц",
+            Value = "Month",
+            Selected = true
+        });
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js">
+</script>
+<script type="text/javascript">
+   // alert('123');
+</script>
+    <script type="text/javascript">
+       // Устанавливаем обработчик потери фокуса для всех полей ввода текста
+       // $("#formid").validate();// end blur()
+        $(document).ready(function () {
+         //   alert('124');
+            var sum = $('#sum');
+            var srok = $('#srok');
+            var stavka = $('#stavka');
+
+          
+            sum.blur(function(){
+                if (sum.val() != '') {
+                    var parsedSum = parseFloat(sum.val());
+                    if (isNaN(parsedSum)) {
+                        $('#error-sum').text('Неверная сумма');
+
+                           $('#error-sum').css({ 'color': 'red'});
+                    } else
+                        if (parsedSum < 0) {
+                            $('#error-sum').text('Сумма должна быть положительной');
+                             $('#error-sum').css({ 'color': 'red'});
+                        } else {
+                            $('#error-sum').text('');
+                        }
+                } else {
+             $('#error-sum').text('Поле Cумма не должно быть пустым!');
+           $('#error-sum').css({ 'color': 'red'});
+                }
+            });
+
+            srok.blur(function () {
+                if (srok.val() != '') {
+                    var parsedSrok = parseInt(srok.val(), 10);
+                    var sr = parsedSrok;
+                   if (isNaN(sr)) {
+                       $('#error-srok').text('Неверный срок');
+                          $('#error-srok').css({ 'color': 'red'});
+                        return;
+                }
+                if (sr > 48 || sr<=0) {
+                    $('#error-srok').text('Срок должен быть целым положительным числом, не больше 48 месяцев ');
+                        $('#error-srok').css({ 'color': 'red' });
+                        return;
+                    } else  {
+                        $('#error-srok').text('');
+                        return;
+                    }
+            }else{
+                $('#error-srok').text('Поле Cрок не должно быть пустым!');
+                $('#error-srok').css({ 'color': 'red' });
+                return;
+ }
+ });
+
+        
+ 
+ stavka.blur(function(){
+ if(stavka.val() != ''){
+     var parsedStavka = parseFloat(stavka.val());
+                    if (isNaN(parsedStavka)) {
+                        $('#error-stavka').text('Неверная ставка');
+                           $('#error-stavka').css({ 'color': 'red'});
+                        
+                    } else
+                        if (parsedStavka < 0 || parsedStavka > 100) {
+                            $('#error-stavka').text('Ставка должна быть положительной, не больше 100');
+                               $('#error-stavka').css({ 'color': 'red'});
+                           // alert('Срок полож');
+                        } else {
+                            $('#error-stavka').text('');
+                        }
+ }else{
+     $('#error-stavka').text('Поле Cтавка не должно быть пустым!');
+       $('#error-stavka').css({ 'color': 'red'});
+ }
+ });
+           /* $("#formid").validate({
+             //   alert(123);
+             rules:{
+                sum:{
+                  required: true,
+                  minlength: 4,
+                  maxlength: 16,
+                },
+                srok:{
+                  required: true,
+                  minlength: 6,
+                  maxlength: 16,
+                },
+             },
+             messages:{
+               sum:{
+                 required: "Это поле обязательно для заполнения",
+                 minlength: "Логин должен быть минимум 4 символа",
+                 maxlength: "Максимальное число символов - 16",
+             },
+               srok:{
+               required: "Это поле обязательно для заполнения",
+               minlength: "Пароль должен быть минимум 6 символа",
+               maxlength: "Пароль должен быть максимум 16 символов",
+               },
+             }
+          });
+ */
+});
+</script>
+<div class="jumbotron">
+    <h3>Кредитный калькулятор</h3>
+    <br />
+    <form id="formid" action="/Home/About" method="POST" class="validate">
+        <br />
+        Сумма кредита, руб:<br />
+        (дробную часть числа указать через запятую)<br />
+        <input type="text" name="sum" id="sum" class="form-control" />
+        <div id="error-sum"></div>
+        <br />
+        Срок кредита  (в месяцах):<br />
+        <input type="text" name="srok" id="srok" class="form-control" />
+        <select class="dropdown-menu" name="type">
+            <option name="month">Месяц</option>
+            <option name="day">День</option>
+        </select>
+        <div id="error-srok"></div>
+        <br />
+        Ставка в год, %:<br />
+        <input type="text" name="stavka" id="stavka" class="form-control" /><div id="error-stavka"></div><br />
+        Тип ставки (год или день):</br>
+        <select class="form-control" name="type_stavka">
+            <option class="form-control" name="year_stavka">Год</option>
+            <option class="form-control" name="day_stavka">День</option>
+        </select>
+        
+        <br />
+        <input type="submit" class="btn btn-primary" value="Рассчитать" />
+    </form>
+</div>
+
+<!--
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+    -->

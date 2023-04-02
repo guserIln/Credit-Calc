@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Таблица платежей";
+    //int i = 0;
+     double s = 0;
+    double s2 = 0;
+    var j = 0;
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<div class="jumbotron">
+    <table class="table table-responsive" style="border-radius:6px" cellpadding="1" cellspacing="2" border="1">
+        <thead class="thead-dark">
+            <tr>
+        <th style="background-color:darkblue; color:white" scope="col">Номер платежа</th>
+        <th style="        background-color: darkblue;
+        color: white
+" scope="col">Ежемесячный платеж</th>
+        <th style="background-color:darkblue; color:white" scope="col">Дата платежа</th>
+        <th style="background-color:darkblue; color:white" scope="col">Размер платежа по телу</th>
+        <th style="background-color:darkblue; color:white" scope="col">Размер платежа по %</th>
+        <th style="background-color:darkblue; color:white" scope="col">Остаток основного долга</th>
+                </tr>
+        </thead>
+        
+
+        @try
+        {
+            s = ViewBag.ItogSumma;
+            s2 = ViewBag.Pereplata;
+            for (int i = 0; i < ViewBag.Ostatok.Length; i++)
+            {
+                //  @j = i + 1; ;
+                <td style="background-color:blanchedalmond; color:black" scope="row">@i</td>
+                <td style="background-color:antiquewhite; color:black" scope="row">@Math.Round(ViewBag.monthAnnPay, 2) руб.</td>
+                <td style="background-color:antiquewhite; color:black" scope="row"> @DateTime.Now.AddMonths(i).ToShortDateString()</td>
+                <td style="background-color:antiquewhite; color:black" scope="row">@Math.Round(ViewBag.Telo[i], 2) руб.</td>
+                <td style="background-color:antiquewhite; color:black" scope="row">@Math.Round(ViewBag.Percent[i], 2) руб.</td>
+                <td style="background-color:bisque; color:black; font-size:10px"><p style="font-size:14px">@Math.Round(ViewBag.Ostatok[i], 2) руб.</p></td>
+                <tr />
+            }
+
+        }
+        catch (Exception ex)
+        {
+            ViewBag.Message = "Ошибка";
+        }
+
+    </table>
+    <p>Итоговая сумма: @Math.Round(s, 2) руб.</p>
+    <p>Переплата: @Math.Round(s2, 2) руб.</p>
+</div>
