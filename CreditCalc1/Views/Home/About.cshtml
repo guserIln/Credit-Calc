@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Таблица платежей";
-    //int i = 0;
      double s = 0;
     double s2 = 0;
     var j = 0;
@@ -29,7 +28,6 @@
             s2 = ViewBag.Pereplata;
             for (int i = 0; i < ViewBag.Ostatok.Length; i++)
             {
-                //  @j = i + 1; ;
                 <td style="background-color:blanchedalmond; color:black" scope="row">@i</td>
                 <td style="background-color:antiquewhite; color:black" scope="row">@Math.Round(ViewBag.monthAnnPay, 2) руб.</td>
                 <td style="background-color:antiquewhite; color:black" scope="row"> @DateTime.Now.AddMonths(i).ToShortDateString()</td>
